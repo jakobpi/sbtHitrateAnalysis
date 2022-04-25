@@ -1,0 +1,16 @@
+executable            = sim.sh
+request_memory = 8 GB
+request_disk = 4 GB
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+arguments             = $(ClusterId) $(ProcId) $(inFile) $(startEvent) $(nEvents)
+output                = /afs/cern.ch/work/j/jpship/anubuild/HTCondor/sim-out/$(ClusterId).$(ProcId).out
+error                 = /afs/cern.ch/work/j/jpship/anubuild/HTCondor/sim-err/$(ClusterId).$(ProcId).err
+log                   = /afs/cern.ch/work/j/jpship/anubuild/HTCondor/sim-log/$(ClusterId).log
+
+requirements = (OpSysAndVer =?= "CentOS7")
+#+JobFlavour = "espresso"
++JobFlavour = "longlunch"
+#+JobFlavour = "workday"
+#+JobFlavour = "tomorrow"
+queue inFile,startEvent,nEvents from queue_list.txt

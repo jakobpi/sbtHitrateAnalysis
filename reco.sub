@@ -1,0 +1,15 @@
+executable            = reco.sh
+request_memory = 4 GB
+request_disk = 2 GB
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+arguments             = $(ClusterId) $(ProcId) $(inFile)
+output                = /afs/cern.ch/work/j/jpship/anubuild/HTCondor/reco-out/$(ClusterId).$(ProcId).out
+error                 = /afs/cern.ch/work/j/jpship/anubuild/HTCondor/reco-err/$(ClusterId).$(ProcId).err
+log                   = /afs/cern.ch/work/j/jpship/anubuild/HTCondor/reco-log/$(ClusterId).log
+#requirements = (OpSysAndVer =?= "CentOS7")
++JobFlavour = "espresso"
+#+JobFlavour = "longlunch"
+#+JobFlavour = "workday"
+#+JobFlavour = "tomorrow"
+queue inFile from queue_list_reco.txt

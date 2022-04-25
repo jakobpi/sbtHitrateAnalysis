@@ -1,0 +1,60 @@
+How to run SBT hit rate analysis on lxplus:
+
+1. Install FairShip software following instructions in
+	https://github.com/ShipSoft/FairShip/blob/master/README.md
+
+	# Important: for the muonbackground analysis you need to change a few lines in FairShip/macro/runSimScript.py
+	Add to run_SimScript.py after import ROOT:
+
+		ROOT.gROOT.ProcessLine('#include "FairEventHeader.h"')
+		ROOT.gROOT.ProcessLine('#include "FairMCPoint.h"')
+
+
+2. cd FairShip/runSBT
+
+3. ./compile.sh  #it will compile getEntries.C script for getting number of events from root files
+
+4. ./getEntriesForAllFiles.sh #this script provide getEntriesForAllFiles.out with the list of all root files
+                              #in your dataset with their number of events
+    #To define data set check line 4, and define your files in for loop
+	/eos/experiment/ship/data/Mbias/background-prod-2018/pythia8_Geant4_10.0_withCharmandBeauty{0..66000..1000}_mu.root
+
+5. ./createRunSimList.sh > queue_list.txt #create queue list for simulation step,
+                                          #which will be used by condor submit script
+    #To define number of events per run change 'eventsPerRunMax' variable
+
+6.a #create config file:
+	 source /cvmfs/ship.cern.ch/SHiP-2021/latest/setUp.sh
+	 alienv load FairShip/latest > config.sh # (make sure you have NOT loaded the Fairship environment)
+
+6. condor_submit sim.sub # Start simulation
+
+   # Important.
+     1.Check that all directories which assigned to 'output', 'error' and 'log' in sim.sub are existing.
+     2.Check that OUTPUTDIR path in sim.sh is correct
+		 3.Check path for config.sh file is correct
+
+7. ./createRunRecoList.sh > queue_list_reco.txt #create queue	list for simulation step,
+                                                #which will be used by condor submit script
+
+    # Impotrant.
+     1.Check 'inPath', it should point to directory with files created at simulations step
+
+8. condor_submit reco.sub # Start reconstruction step
+
+   # Impotrant.
+     1.Check that all directories which assigned to 'output', 'error' and 'log' in reco.sub are existing.
+     2.Check that 'OUTPUTDIR' and 'INPUTDIR' pathes in reco.sh are correct
+
+9. ./createRunAnaList.sh > queue_list_ana.txt #create queue   list for analysis step,
+                                                #which will be used by condor submit script
+
+    # Impotrant.
+     1.Check 'inPath', it should point to directory with files created at reconstruction step
+
+10. condor_submit vetoana.sub # Start analysis step
+	 # This saves relevant info into csv files and stores them at given location.
+   # Impotrant.
+     1.Check that all directories which assigned to 'output', 'error' and 'log' in vetoana.sub are existing.
+     2.Check that 'OUTPUTDIR' and 'INPUTDIR' pathes in ana.sh are correct
+     3.Be sure you call correct vetoana.py script in vetoana.sh

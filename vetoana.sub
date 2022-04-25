@@ -1,0 +1,15 @@
+executable            = vetoana.sh
+request_memory = 4 GB
+request_disk = 2 GB
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+arguments             = $(ClusterId) $(ProcId) $(inFile)
+output                = /afs/cern.ch/work/j/jpship/anubuild/HTCondor/ana-out/$(ClusterId).$(ProcId).out
+error                 = /afs/cern.ch/work/j/jpship/anubuild/HTCondor/ana-err/$(ClusterId).$(ProcId).err
+log                   = /afs/cern.ch/work/j/jpship/anubuild/HTCondor/ana-log/$(ClusterId).log
+#requirements = (OpSysAndVer =?= "CentOS7")
+#+JobFlavour = "espresso"
++JobFlavour = "longlunch"
+#+JobFlavour = "workday"
+#+JobFlavour = "tomorrow"
+queue inFile from queue_list_ana.txt

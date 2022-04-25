@@ -58,3 +58,11 @@ How to run SBT hit rate analysis on lxplus:
      1.Check that all directories which assigned to 'output', 'error' and 'log' in vetoana.sub are existing.
      2.Check that 'OUTPUTDIR' and 'INPUTDIR' pathes in ana.sh are correct
      3.Be sure you call correct vetoana.py script in vetoana.sh
+
+11. python3 combineCSV.py # Combines CSV files into one file
+
+	 # Make sure the paths are defined correctly
+
+12. Open combined csv in analysis jupyter notebook
+
+This work is based on the work by Ievgen Korol: https://github.com/ghkorol/FairShip/tree/master/runSBT

@@ -3,14 +3,13 @@ How to run SBT hit rate analysis on lxplus:
 1. Install FairShip software following instructions in
 	https://github.com/ShipSoft/FairShip/blob/master/README.md
 
-	# Important: for the muonbackground analysis you need to change a few lines in FairShip/macro/runSimScript.py
+
+2. Important: for the muonbackground analysis you need to change a few lines in FairShip/macro/runSimScript.py
 	Add to run_SimScript.py after import ROOT:
 
 		ROOT.gROOT.ProcessLine('#include "FairEventHeader.h"')
 		ROOT.gROOT.ProcessLine('#include "FairMCPoint.h"')
 
-
-2. cd FairShip/runSBT
 
 3. ./compile.sh  #it will compile getEntries.C script for getting number of events from root files
 

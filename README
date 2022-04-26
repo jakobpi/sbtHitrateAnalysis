@@ -1,3 +1,5 @@
+(This work is based on the work by Dr. Ievgen Korol: https://github.com/ghkorol/FairShip/tree/master/runSBT)
+
 How to run SBT hit rate analysis on lxplus:
 
 1. Install FairShip software following instructions in
@@ -64,4 +66,3 @@ How to run SBT hit rate analysis on lxplus:
 
 12. Open combined csv in analysis jupyter notebook
 
-This work is based on the work by Ievgen Korol: https://github.com/ghkorol/FairShip/tree/master/runSBT
